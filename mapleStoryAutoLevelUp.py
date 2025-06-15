@@ -981,8 +981,8 @@ class MapleStoryBot:
         text_list = [
             f"FPS: {self.fps}",
             f"Status: {self.status}",
-            f"Press 'F1' to {"pause" if self.kb.is_enable else "start"} Bot",
-            f"Press 'F2' to save screenshot{" : Saved" if dt_screenshot < 0.7 else ""}"]
+            f"Press 'F1' to {'pause' if self.kb.is_enable else 'start'} Bot",
+            f"Press 'F2' to save screenshot{' : Saved' if dt_screenshot < 0.7 else ''}"]
         for idx, text in enumerate(text_list):
             cv2.putText(
                 self.img_frame_debug, text,
