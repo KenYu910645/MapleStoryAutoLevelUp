@@ -9,18 +9,23 @@ class Config:
     # ────────────────
     is_use_teleport_to_walk = False # use teleport to walk
     teleport_cooldown = 1 # second
-    is_edge_teleport = True
+    is_edge_teleport = False
     fps_limit = 10
+
+    # Buff skill keys, e.g., magical sheild, angel blessing
+    buff_skill_keys     = ["1", "2"]
+    buff_skill_cooldown = [140, 45] # Second
+    buff_skill_active_duration = 1 # second
 
     # ────────────────
     # Keyboard Mapping
     # ────────────────
-    aoe_skill_key = "q" # It can be monk's healing skill
-    magic_claw_key = "w"
-    jump_key = "space"
+    aoe_skill_key = "s" # It can be monk's healing skill
+    magic_claw_key = "d"
+    jump_key = "z"
     heal_key = "q"
     add_mp_key = "2" # Drink potion
-    teleport_key = "e" # Mage's teleport skill
+    teleport_key = "" # Mage's teleport skill
 
     # ────────────────
     # Edge Teleport
@@ -146,7 +151,7 @@ class Config:
     # ────────────────
     # Don't modify the following parameter unless you know what you are doing
     # ────────────────
-    game_window_title = 'MapleStory Worlds-Artale (繁體中文版)'
+    game_window_title = 'MapleStory Worlds'
     # color code for patrol route
     color_code = {
         # R   G   B
@@ -160,8 +165,8 @@ class Config:
         (255,255,127): "down", # light_yellow
         (0,255,127): "stop", # pink_green
         (255,255,0): "goal", # yellow
-        (255,0,127): "teleport up", # pink
-        (127,0,255): "teleport down", # light_purple
+        # (255,0,127): "teleport up", # pink
+        # (127,0,255): "teleport down", # light_purple
     }
 
     window_size = (752, 1282)

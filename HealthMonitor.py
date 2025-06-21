@@ -190,14 +190,14 @@ class HealthMonitor:
                     current_time - self.last_heal_time > self.cfg["health_monitor"]["add_hp_cooldown"]):
                     self._heal()
                     self.last_heal_time = current_time
-                    logger.info(f"[Health Monitor]: Auto heal triggered, HP: {self.hp_ratio*100:.1f}%")
+                    # logger.info(f"[Health Monitor]: Auto heal triggered, HP: {self.hp_ratio*100:.1f}%")
 
                 # Check if need MP (with cooldown)
                 if (self.mp_ratio <= self.cfg["health_monitor"]["add_mp_ratio"] and
                     current_time - self.last_mp_time > self.cfg["health_monitor"]["add_mp_cooldown"]):
                     self._add_mp()
                     self.last_mp_time = current_time
-                    logger.info(f"[Health Monitor]: Auto MP triggered, MP: {self.mp_ratio*100:.1f}%")
+                    # logger.info(f"[Health Monitor]: Auto MP triggered, MP: {self.mp_ratio*100:.1f}%")
 
                 # Sleep to avoid excessive CPU usage
                 self.limit_fps()

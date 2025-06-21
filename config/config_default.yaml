@@ -205,10 +205,10 @@ route:
     "255,255,127": "down"          # 🟡 Light yellow
     "0,255,127": "stop"            # 🟢 Light green
     "255,255,0": "goal"            # 🟨 Yellow
-    "255,0,127": "teleport up"     # 🌸 Pink
-    "127,0,255": "teleport down"   # 🟪 Purple
-    "0,127,0": "teleport left"     # 🟩 Dark green
-    "139,69,19": "teleport right"  # 🟫 Brown
+    # "255,0,127": "teleport up"     # 🌸 Pink
+    # "127,0,255": "teleport down"   # 🟪 Purple
+    # "0,127,0": "teleport left"     # 🟩 Dark green
+    # "139,69,19": "teleport right"  # 🟫 Brown
 
 # ────────────────────────────────
 # 🐶 Watchdog (Anti-Stuck System)
@@ -227,8 +227,8 @@ watchdog:
 # Detects the "Please remove the rune" message on screen.
 # When this warning appears, the bot will pause combat and start searching for the rune instead.
 rune_warning:
-  top_left: [513, 196]        # 🟦 Top-left corner of the rune warning message
-  bottom_right: [768, 236]    # 🟥 Bottom-right corner of the rune warning
+  top_left: [513, 206]        # 🟦 Top-left corner of the rune warning message
+  bottom_right: [768, 246]    # 🟥 Bottom-right corner of the rune warning
   diff_thres: 0.2             # 📏 Matching threshold [0.0 ~ 1.0], higher = stricter match
 
 # ────────────────

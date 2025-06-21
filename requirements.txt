@@ -4,5 +4,6 @@ pyautogui
 pynput
 requests
 pyyaml
+mss
 windows-capture ; sys_platform == "win32"
 pyobjc-framework-Quartz ; sys_platform == "darwin" # TODO: dev macOS in another branch

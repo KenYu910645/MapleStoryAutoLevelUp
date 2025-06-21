@@ -196,11 +196,11 @@ class KeyBoardController():
                 self.release_all_key()
 
             elif self.command == "heal":
-                self.press_key(self.cfg.heal_key, 0.02)
+                # self.press_key(self.cfg.heal_key, 0.02)
                 self.command = ""
 
             elif self.command == "add mp":
-                self.press_key(self.cfg.add_mp_key, 0.02)
+                # self.press_key(self.cfg.add_mp_key, 0.02)
                 self.command = ""
 
             else:

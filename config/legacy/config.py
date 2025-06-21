@@ -10,29 +10,29 @@ class Config:
     # Adjust the following key to match the in-game keybinding for your character.
 
     # Key to trigger AoE skill (e.g., Monk's AoE heal or Mage's AoE attack).
-    aoe_skill_key = "q"
+    aoe_skill_key = "s"
 
     # Key to trigger the basic attack skill, like Mage's Magic Claw.
-    magic_claw_key = "w"
+    magic_claw_key = "d"
 
     # Key to trigger Mage's teleport skill
     teleport_key = "" # set to "", if need to disable teleport skill
 
     # Key for jumping.
-    jump_key = "space"
+    jump_key = "z"
 
     # Key to use a health potion.
-    heal_key = "1"
+    heal_key = ""
 
     # Key to use a mana potion.
-    add_mp_key = "2"
+    add_mp_key = ""
 
     # ────────────────
     # Buff skill
     # ────────────────
     # Buff skill keys, e.g., magical sheild, angel blessing
-    buff_skill_keys     = []
-    buff_skill_cooldown = [] # Second
+    buff_skill_keys     = ["1", "2"]
+    buff_skill_cooldown = [140, 45] # Second
     buff_skill_active_duration = 1 # second
     buff_skill_action_cooldown = 1 # second, avoid cast buff skill after attack
 
@@ -56,7 +56,7 @@ class Config:
     # Edge Teleport
     # ────────────────
     # Mage can use teleport skill if they're too close to edge
-    is_edge_teleport = True
+    is_edge_teleport = False
     edge_teleport_box_width  = 20
     edge_teleport_box_height = 10
     edge_teleport_color_code = (255,127,127) # (R,G,B)
@@ -93,8 +93,12 @@ class Config:
     aoe_skill_range_x = 400 # pixels (horizontal range)
     aoe_skill_range_y = 170  # pixels (vertical range)
     # magic claw skill attack range relative to player position
-    magic_claw_range_x = 350 # pixels (horizontal range)
-    magic_claw_range_y = 70  # pixels (vertical range)
+    # 槍騎
+    magic_claw_range_x = 140 # pixels (horizontal range)
+    magic_claw_range_y = 100  # pixels (vertical range)
+    # 槍手
+    # magic_claw_range_x = 380 # pixels (horizontal range)
+    # magic_claw_range_y = 90  # pixels (vertical range)
     # attack cooldown time in seconds
     attack_cooldown = 0.05  # seconds between attacks
     # character turn delay before attack
@@ -141,14 +145,14 @@ class Config:
     rune_finding_timeout = 1200 # second
     rune_detect_level_coef = 0.1 # raise threshold for each level
     rune_detect_level_raise_interval = 60 # second
-    near_rune_duration = 5 # second
+    near_rune_duration = 15 # second
 
     # ────────────────
     # Rune mini-game
     # ────────────────
     arrow_box_size = 80 # pixel, 75x75 box
     arrow_box_interval = 170 # pixel width
-    arrow_box_start_point = (355, 355)
+    arrow_box_start_point = (355, 365)
     arrow_box_diff_thres = 0.2
 
     # ────────────────
@@ -187,7 +191,7 @@ class Config:
     # ────────────────
     # Don't modify the following parameter unless you know what you are doing
     # ────────────────
-    game_window_title = 'MapleStory Worlds-Artale (繁體中文版)'
+    game_window_title = 'MapleStory Worlds'
     # color code for patrol route
     color_code = {
         # R   G   B
@@ -201,10 +205,10 @@ class Config:
         (255,255,127): "down", # light_yellow
         (0,255,127): "stop", # pink_green
         (255,255,0): "goal", # yellow
-        (255,0,127): "teleport up", # pink
-        (127,0,255): "teleport down", # light_purple
-        (0, 127, 0): "teleport left", # dark green
-        (139, 69, 19): "teleport right" # brown
+        # (255,0,127): "teleport up", # pink
+        # (127,0,255): "teleport down", # light_purple
+        # (0, 127, 0): "teleport left", # dark green
+        # (139, 69, 19): "teleport right" # brown
     }
 
     window_size = (752, 1282)

@@ -104,7 +104,7 @@ class GameWindowCapturor:
         with self.lock:
             if self.frame is None:
                 return None
-            # cv2.imwrite("debug_frame.png", self.frame)
+            cv2.imwrite("debug_frame.png", self.frame)
             return cv2.cvtColor(self.frame, cv2.COLOR_BGRA2BGR)
 
     def on_closed(self):
