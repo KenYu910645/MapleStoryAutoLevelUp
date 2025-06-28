@@ -48,8 +48,8 @@ buff_skill:
 # ────────────────
 # 🗡️ Directional Attack
 # ────────────────
-# Directional attacks are basic skills that rely on the character’s facing direction.
-# Examples include: Mage’s Magic Claw, Thief’s dart throw, or even a snail shell toss.
+# Directional attacks are basic skills that rely on the character's facing direction.
+# Examples include: Mage's Magic Claw, Thief's dart throw, or even a snail shell toss.
 # These settings are applied when launching the program with: --attack "directional_attack"
 
 directional_attack:
@@ -62,7 +62,7 @@ directional_attack:
 # 💥 AoE Skill
 # ────────────────
 # AoE (Area of Effect) skills hit enemies no matter which direction the chrarcter is facing.
-# Examples: Cleric’s Heal, Mage’s Lightning Bolt
+# Examples: Cleric's Heal, Mage's Lightning Bolt
 
 aoe_skill:
   range_x: 400               # ↔️ Horizontal skill range (in pixels)
@@ -248,9 +248,10 @@ watchdog:
 # Detects the "Please remove the rune" message on screen.
 # When this warning appears, the bot will pause combat and start searching for the rune instead.
 rune_warning:
-  top_left: [513, 196]        # 🟦 Top-left corner of the rune warning message
-  bottom_right: [768, 236]    # 🟥 Bottom-right corner of the rune warning
-  diff_thres: 0.2             # 📏 Matching threshold [0.0 ~ 1.0], higher = stricter match
+  top_left: [513, 196]            # 🟦 Top-left corner of the rune warning message
+  bottom_right: [768, 236]        # 🟥 Bottom-right corner of the rune warning
+  diff_thres: 0.2                 # 📏 Matching threshold [0.0 ~ 1.0], higher = stricter match
+  redirect_change_channel: True  # 🔄 Redirect to change channel when rune warning is detected
 
 # ────────────────
 # ✨ Rune Detection Box
@@ -265,7 +266,7 @@ rune_detect:
 # ────────────────
 # 🧭 Rune-Finding Behavior
 # ────────────────
-# Defines the bot’s strategy for searching and interacting with the rune.
+# Defines the bot's strategy for searching and interacting with the rune.
 rune_find:
   timeout: 1200               # ⏳ Maximum time (in seconds) to keep searching before giving up
                               # If the timeout is reached, the bot will fallback to route_rest.png and rest.
@@ -274,6 +275,11 @@ rune_find:
   rune_trigger_cooldown: 0.3    # 🕒 Cooldown for 'up' key rune trigger
   rune_trigger_distance_x: 20    # only press 'up' when player distance(in pixel) to the rune is close enough.
   rune_trigger_distance_y: 200
+
+  long_movement_cooldown: 0.3       # 🐌 Cooldown (in seconds) between movement commands in finding_rune status
+  movement_cooldown: 1       # 🐌 Cooldown (in seconds) between movement commands in near_rune status
+                               #     Higher values = slower movement (useful for precise positioning near rune)
+
 # ─────────────────────────────
 # 🧩 Rune Mini-Game Solver
 # ─────────────────────────────
@@ -293,7 +299,7 @@ rune_solver:
 # 🗺️ Mini-Map
 # ─────────────────────────────
 # The minimap appears in the top-left corner of the game window.
-# It is used to estimate the player’s current location in the world.
+# It is used to estimate the player's current location in the world.
 
 minimap:
   player_color: [136, 255, 255]   # 🟡 BGR value of the yellow player dot on the minimap

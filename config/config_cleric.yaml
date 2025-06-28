@@ -10,26 +10,90 @@
 # 🎯 KEY BINDINGS
 # Match these to your in-game keys. Uncomment once you're done.
 key:
-  aoe_skill: "r"            # 💥 Set to the AoE skill key. Choose a key with low cooldown.
-  directional_attack: "w"   # ⚔️ Assign to your main spammable attack.
-  teleport: "e"             # 🌀 Leave empty ("") if your class can’t teleport.
-  jump: "space"             # 🦘 Set to jump. No need to change unless you use a non-standard key.
-  add_hp: "q"               # ❤️ Assign to HP potion hotkey. Match with your potion shortcut.
+  aoe_skill: "s"            # 💥 Set to the AoE skill key. Choose a key with low cooldown.
+  directional_attack: "d"   # ⚔️ Assign to your main spammable attack.
+  teleport: "a"             # 🌀 Leave empty ("") if your class can’t teleport.
+  jump: "z"             # 🦘 Set to jump. No need to change unless you use a non-standard key.
+  add_hp: "1"               # ❤️ Assign to HP potion hotkey. Match with your potion shortcut.
   add_mp: "2"               # 💧 Assign to MP potion hotkey. Match with your potion shortcut.
+  return_home: "home"       # 🔁 Key to use return home scroll.
+  party: "y"                # ⌨️ Party window shortcut
+
+# ────────────────
+# Auto change channel
+# ────────────────
+# "": Off
+# "true": Change channel once other player is detected
+# "pixel": Change channel once other player move set pixels in other_player_move_pixel
+auto_change_channel: "pixel"
+other_player_move_pixel: 10  # only work when auto_change_channel == "pixel" 
+
+nametag:
+  enable: False
+  # 🧪 Comparison mode for matching the nametag:
+  #   - "grayscale": match using grayscale image
+  #   - "white_mask": match using binarized image
+  mode: "grayscale"  # Options: "grayscale", "white_mask"
+
+  # 🎯 Offset from the top-left corner of the matched nametag to the character center
+  offset: [-50, 30]  # in pixels
+
+  # 📏 Matching threshold
+  diff_thres: 0.25     # [0.0 ~ 1.0] — lower = more tolerant, higher = stricter
+
+  # 🧠 Global detection fallback
+  # If the diff is higher than this threshold, do a full-frame search.
+  # If lower, search near the last known location to save time.
+  # Set to 0.0 to disable this optimization
+  global_diff_thres: 0.2
+
+  # ✂️ Split detection
+  # To avoid occlusion from ladders or background objects,
+  # the nametag will be split vertically and matched in smaller parts.
+  split_width: 30  # in pixels — width of each vertical split
+
+
+camera:
+  y_start: 60     # ⬆️ Top boundary (in pixels)
+  y_end: 665      # ⬇️ Bottom boundary (in pixels)
+
+# ────────────────
+# 🌀 Mage Teleport
+# ────────────────
+# This feature lets Mages use teleport to move faster while walking.
+# ⚠️ Still experimental! Enabling it may cause route-following issues.
+
+teleport:
+  is_use_teleport_to_walk: False  # ✅ Use teleport while walking (may cause inaccurate pathing)
+  cooldown: 1                     # ⏱️ Teleport skill cooldown (in seconds)
+
+# ────────────────
+# 🧙‍♂️ Edge Teleport
+# ────────────────
+# When your character approaches the edge of a platform,
+# this feature triggers a teleport (for Mages) to prevent falling.
+# If your character isn't a Mage, it will perform a jump instead.
+
+edge_teleport:
+  enable: True                 # ✅ Enable or disable this feature
+  trigger_box_width: 20        # ↔️ Width of the edge detection box (in pixels)
+  trigger_box_height: 10       # ↕️ Height of the edge detection box (in pixels)
+  color_code: [255, 127, 127]  # 🎨 RGB color code to represent platform edge
+
 
 # 🧙 BUFF SKILLS
 # Add keys for buffs you want to auto-cast. Match cooldowns with actual in-game durations.
-# buff_skill:
-#   keys: ["a", "s"]          # ⌨️ Add one or more buff keys here (in order).
-#   cooldown: [180, 90]       # ⏱️ Set each skill’s cooldown (seconds). Be precise to avoid spamming.
+buff_skill:
+  keys: ["f"]          # ⌨️ Add one or more buff keys here (in order).
+  cooldown: [122]       # ⏱️ Set each skill’s cooldown (seconds). Be precise to avoid spamming.
 
 # ⚔️ DIRECTIONAL ATTACK SETTINGS
 # Tune these by observing the debug window.
 # Smaller range -> you will fight monster in close-range combat
 # Larger range -> you will attack monster far away, but could hit nothing if it's set to large
-# directional_attack:
-#   range_x: 320              # ↔️ Try reducing if you’re hitting unreachable monsters.
-#   range_y: 60               # ↕️
+directional_attack:
+  range_x: 320              # ↔️ Try reducing if you’re hitting unreachable monsters.
+  range_y: 90               # ↕️
 
 # 💥 AOE SKILL SETTINGS
 # Similar to directional attack. Adjust to match your AoE hitbox on screen.
@@ -47,5 +111,73 @@ aoe_skill:
 health_monitor:
   enable: True              # ✅ Set to False if using pet auto-heal.
   force_heal: True          # 🛡️ Heal first — stop attacking until HP is restored
-  add_hp_ratio: 0.7         # ❤️ drink potion when HP is below this number
+  add_hp_ratio: 0.5         # ❤️ drink potion when HP is below this number
   add_mp_ratio: 0.5         # 💙 drink potion when MP is below this number
+  add_hp_cooldown: 0     # 🕒 Seconds to wait between HP potions, prevent potion spam
+  add_mp_cooldown: 0     # 🕒 Seconds to wait between MP potions, prevent potion spam
+  fps_limit: 20            # 🚥 Loop rate for the health monitor thread
+  return_home_if_no_potion: True      # ✅ Use homing scroll when potion is used up
+  return_home_watch_dog_timeout: 3     # 🕒 Duration to detect HP is lower than "add_hp_ratio"
+
+
+# ────────────────
+# ⚠️ Rune Warning Detection
+# ────────────────
+# Detects the "Please remove the rune" message on screen.
+# When this warning appears, the bot will pause combat and start searching for the rune instead.
+rune_warning:
+  top_left: [513, 216]        # 🟦 Top-left corner of the rune warning message
+  bottom_right: [768, 256]    # 🟥 Bottom-right corner of the rune warning
+  diff_thres: 0.35             # 📏 Matching threshold [0.0 ~ 1.0], higher = stricter match
+
+# ────────────────
+# ✨ Rune Detection Box
+# ────────────────
+# This detects the glowing purple rune symbol on screen.
+# The box determines how big of a region to search in the game screen.
+rune_detect:
+  box_width: 350              # ↔️ Width of the detection region
+  box_height: 150             # ↕️ Height of the detection region
+  diff_thres: 0.2             # 📏 Match threshold [0.0 ~ 1.0], higher = stricter match
+
+# ────────────────
+# 🧭 Rune-Finding Behavior
+# ────────────────
+# Defines the bot's strategy for searching and interacting with the rune.
+rune_find:
+  timeout: 20               # ⏳ Maximum time (in seconds) to keep searching before giving up
+                              # If the timeout is reached, the bot will fallback to route_rest.png and rest.
+  timeout_action: "change_channel" # "go_home"
+  near_rune_duration: 10       # 🕒 Duration to interact with rune when a positive detection occurs
+  rune_trigger_cooldown: 0.3    # 🕒 Cooldown for 'up' key rune trigger
+  rune_trigger_distance_x: 20    # only press 'up' when player distance(in pixel) to the rune is close enough.
+  rune_trigger_distance_y: 200   # only press 'up' when player distance(in pixel) to the rune is close enough.
+  
+  long_movement_cooldown: 0.3       # 🐌 Cooldown (in seconds) between movement commands in finding_rune status
+  movement_cooldown: 0.5       # 🐌 Cooldown (in seconds) between movement commands in near_rune status
+                               #     Higher values = slower movement (useful for precise positioning near rune)
+
+
+rune_solver:
+  arrow_box_size: 80           # 📐 Arrow icon size in pixels (e.g., 75x75 box)
+  arrow_box_interval: 170      # ↔️ Distance between arrows (horizontal spacing in pixels)
+  arrow_box_coord: [355, 365]  # 🎯 Top-left coordinate of the first (leftmost) arrow
+  arrow_box_diff_thres: 0.32    # 📏 Match threshold [0.0 ~ 1.0]
+                               #     ↪ If the match score of the first arrow is lower than this,
+                               #     the solver assumes the rune mini-game has start
+
+# ────────────────
+# ⚙️ System Settings
+# ────────────────
+# Controls performance and behavior of core system threads.
+
+system:
+  fps_limit_main: 30                # 🚥 Main loop FPS – controls how fast the main thread runs
+  fps_limit_keyboard_controller: 30 # 🚥 Keyboard controller thread FPS
+  fps_limit_window_capturor: 20     # 🚥 Window capture thread FPS
+  fps_limit_route_recorder: 10      # 🚥 Route recorder FPS
+  fps_limit_auto_dice_roller: 1     # 🚥 Auto rice roller FPS
+  key_debounce_interval: 1          # ⏱️ Cooldown (in seconds) between function key presses (e.g., F1, F2...)
+  show_debug_window: True           # 🐞 Show debug window (disable to save resources)
+  server: "TW"                      # "TW", "NA"
+  language: "chinese"               # "english" "chinese"

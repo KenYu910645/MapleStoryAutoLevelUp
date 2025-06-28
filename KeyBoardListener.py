@@ -13,6 +13,7 @@ from pynput import keyboard
 from logger import logger
 
 pyautogui.PAUSE = 0  # remove delay
+pyautogui.FAILSAFE = False  # Disable fail-safe to prevent exceptions during automation
 
 class KeyBoardListener():
     '''
