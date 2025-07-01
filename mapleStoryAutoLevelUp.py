@@ -1871,7 +1871,7 @@ class MapleStoryBot:
             self.kb.is_need_screen_shot = False
 
         # Make sure player is in party
-        if self.is_first_frame is True:
+        if self.is_first_frame is True and is_mac():
             activate_game_window(self.cfg["game_window"]["title"])
             time.sleep(0.3)
             self.ensure_is_in_party()
