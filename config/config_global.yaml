@@ -53,8 +53,8 @@ health_monitor:
   add_mp_ratio: 0.5         # 💙 drink potion when MP is below this number
 
 game_window:
-  title: "MapleStory Worlds"  # 🎮 Game window title (used to detect the correct window)
-  size: [776, 1280]                              # 📐 Game window size [height, width] in pixels
+  title: "MapleStory Worlds-Artale(Global)"  # 🎮 Game window title (used to detect the correct window)
+  size: [752, 1282]                          # 📐 Game window size [height, width] in pixels
 
 # NA server's use english rune warning, so it's longer than TW server
 rune_warning:

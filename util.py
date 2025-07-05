@@ -689,10 +689,17 @@ def activate_game_window(window_title):
     if hwnd == 0:
         raise Exception(f"Cannot find window with title: {window_title}")
 
-    # Restore if minimized
-    win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
-    # Bring to foreground
-    win32gui.SetForegroundWindow(hwnd)
+    try:
+        # Try to restore the window first
+        win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+ 
+        # Try to set foreground
+        win32gui.SetForegroundWindow(hwnd)
+    except:
+        # If SetForegroundWindow fails, try alternative methods
+        win32gui.ShowWindow(hwnd, win32con.SW_SHOW)
+        win32gui.BringWindowToTop(hwnd)
+        win32gui.SetActiveWindow(hwnd)
 
 def is_img_16_to_9(img, cfg):
     """
