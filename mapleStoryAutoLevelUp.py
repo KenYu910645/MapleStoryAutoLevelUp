@@ -1836,6 +1836,7 @@ class MapleStoryBot:
             if diff_timeout > self.cfg["rune_find"]["timeout"]:
                 if self.cfg["rune_find"]["timeout_action"] == "change_channel":
                     # Change channel to avoid rune
+                    logger.info("Change channel to avoid rune")
                     self.channel_change()
                 else:
                     # Return home

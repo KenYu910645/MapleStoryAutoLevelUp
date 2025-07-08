@@ -19,6 +19,7 @@ else:
     import pygetwindow as gw
 
 pyautogui.PAUSE = 0  # remove delay
+pyautogui.FAILSAFE = False  # Disable fail-safe to prevent exceptions during automation
 
 class KeyBoardController():
     '''
