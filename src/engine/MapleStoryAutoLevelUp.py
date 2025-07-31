@@ -1291,77 +1291,55 @@ class MapleStoryAutoBot:
 
     def get_attack_direction(self, monster_left, monster_right):
         '''
-        get_attack_direction
+        改进的攻击方向判定
+        严格验证怪物位置与角色朝向的关系
         '''
-        # Compute distance for left
-        distance_left = float('inf')
+        # 获取角色当前朝向（通过移动方向判断）
+        is_facing_left = self.cmd_move_x == "left" if self.cmd_move_x != "none" else False
+        is_facing_right = self.cmd_move_x == "right" if self.cmd_move_x != "none" else True  # 默认朝右
+
+        # 验证左侧怪物是否确实在角色左侧
+        valid_left = False
         if monster_left is not None:
             mx, my = monster_left["position"]
             mw, mh = monster_left["size"]
-            center_left = (mx + mw // 2, my + mh // 2)
-            distance_left = abs(center_left[0] - self.loc_player[0]) + \
-                            abs(center_left[1] - self.loc_player[1])
-        # Compute distance for right
-        distance_right = float('inf')
+            monster_center_x = mx + mw // 2
+            if monster_center_x < self.loc_player[0]:  # 怪物中心在玩家左侧
+                valid_left = True
+
+        # 验证右侧怪物是否确实在角色右侧
+        valid_right = False
         if monster_right is not None:
             mx, my = monster_right["position"]
             mw, mh = monster_right["size"]
-            center_right = (mx + mw // 2, my + mh // 2)
-            distance_right = abs(center_right[0] - self.loc_player[0]) + \
-                            abs(center_right[1] - self.loc_player[1])
-        # Choose attack direction and nearest monster
-        attack_direction = None
-        # nearest_monster = None
-
-        # Additional validation: check if monster is actually on the correct side
-        def is_monster_on_correct_side(monster, direction):
-            if monster is None:
-                return False
-            mx, my = monster["position"]
-            mw, mh = monster["size"]
             monster_center_x = mx + mw // 2
-            player_x = self.loc_player[0]
+            if monster_center_x > self.loc_player[0]:  # 怪物中心在玩家右侧
+                valid_right = True
 
-            if direction == "left":
-                return monster_center_x < player_x  # Monster should be left of player
-            else:  # direction == "right"
-                return monster_center_x > player_x  # Monster should be right of player
-
-        # Only choose direction if there's a clear winner and monster is on correct side
-        if monster_left is not None and monster_right is None and \
-            is_monster_on_correct_side(monster_left, "left"):
+        # 根据朝向严格选择攻击方向
+        attack_direction = None
+        if is_facing_left and valid_left:
             attack_direction = "left"
-            # nearest_monster = monster_left
-        elif monster_right is not None and monster_left is None and \
-            is_monster_on_correct_side(monster_right, "right"):
+        elif is_facing_right and valid_right:
             attack_direction = "right"
-            # nearest_monster = monster_right
-        elif monster_left is not None and monster_right is not None:
-            # Both sides have monsters, check distance and side validation
-            left_valid = is_monster_on_correct_side(monster_left, "left")
-            right_valid = is_monster_on_correct_side(monster_right, "right")
 
-            if left_valid and not right_valid:
+        # 如果当前没有移动方向，则选择最近的有效目标
+        if attack_direction is None and self.cmd_move_x == "none":
+            if valid_left and valid_right:
+                # 计算两侧距离
+                left_dist = abs(monster_left["position"][0] - self.loc_player[0])
+                right_dist = abs(monster_right["position"][0] - self.loc_player[0])
+                attack_direction = "left" if left_dist < right_dist else "right"
+            elif valid_left:
                 attack_direction = "left"
-                # nearest_monster = monster_left
-            elif right_valid and not left_valid:
+            elif valid_right:
                 attack_direction = "right"
-                # nearest_monster = monster_right
-            elif left_valid and right_valid and distance_left < distance_right - 50:
-                attack_direction = "left"
-                # nearest_monster = monster_left
-            elif left_valid and right_valid and distance_right < distance_left - 50:
-                attack_direction = "right"
-                # nearest_monster = monster_right
-            # If both valid but distances too close, don't attack to avoid confusion
 
-        # Debug attack direction selection
-        if monster_left is not None or monster_right is not None:
-            left_side_ok = is_monster_on_correct_side(monster_left, "left") if monster_left else False
-            right_side_ok = is_monster_on_correct_side(monster_right, "right") if monster_right else False
-            debug_text = f"L:{distance_left:.0f}({left_side_ok}) R:{distance_right:.0f}({right_side_ok}) Dir:{attack_direction}"
-            cv2.putText(self.img_frame_debug, debug_text,
-                        (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+        # 调试信息
+        debug_text = f"L:{'V' if valid_left else 'X'} R:{'V' if valid_right else 'X'} Facing:{'left' if is_facing_left else 'right'} Dir:{attack_direction}"
+        cv2.putText(self.img_frame_debug, debug_text,
+                    (10, 450), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+
         return attack_direction
 
     def is_need_change_channel(self, loc_other_players):
