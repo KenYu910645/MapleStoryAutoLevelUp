@@ -1,0 +1,4 @@
+PyQt5>=5.15
+opencv-python>=4.5
+numpy>=1.20
+pywin32>=305
